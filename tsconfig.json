@@ -11,11 +11,3 @@
     "outDir": "api"
   }
 }
-
-/**
-  Originally, I had a file in api/handler.tsx. It compiled via `tsc` successfully. When I ran `vercel dev`, the program ran successfully. 
-  However, Vercel also spat out a bunch of erroneous TS warnings. I think Vercel has a bug where it tries to compile
-  using the wrong settings.
-
-  To work around that, we emit a JS file, then run that via Vercel.
-*/
