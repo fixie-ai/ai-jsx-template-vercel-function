@@ -10,7 +10,9 @@
     "demo": "curl http://localhost:3000/api/handler?q=what%20are%20beans"
   },
   "dependencies": {
+    "ai": "^2.0.0",
     "ai-jsx": "^0.2.0-4",
+    "openai-edge": "^1.0.0",
     "pino": "^8.14.1",
     "pino-pretty": "^10.0.0",
     "vercel": "^30.2.2"
