@@ -1,12 +1,26 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import * as LLMx from "ai-jsx";
+import { Element } from 'ai-jsx';
 import {
   ChatCompletion,
   SystemMessage,
   UserMessage,
 } from "ai-jsx/core/completion";
-import { PinoLogger } from "ai-jsx/core/log";
-import { pino } from "pino";
+import { LogImplementation, LogLevel } from "ai-jsx/core/log";
+
+class ConsoleLogger extends LogImplementation {
+  log(level: LogLevel, element: Element<any>, renderId: string, obj: unknown | string, msg?: string) {
+    const args = [`[${level}]`] as unknown[];
+    args.push(`<${element.tag.name}>`, renderId);
+    if (msg) {
+      args.push(msg);
+    }
+    if (obj) {
+      args.push(obj);
+    }
+    console.log(...args);
+  }
+}
 
 function App({query}: {query: string}) {
   return (
@@ -18,16 +32,6 @@ function App({query}: {query: string}) {
     </ChatCompletion>
   );
 }
-const pinoStdoutLogger = pino({
-  name: "ai-jsx",
-  level: process.env.loglevel ?? "debug",
-  transport: {
-    target: "pino-pretty",
-    options: {
-      colorize: true,
-    },
-  },
-});
 
 export default async function handler(
   request: VercelRequest,
@@ -44,7 +48,7 @@ export default async function handler(
   }
   try {
     const rendered = await LLMx.createRenderContext({
-      logger: new PinoLogger(pinoStdoutLogger),
+      logger: new ConsoleLogger(),
     }).render(<App query={query} />)
     response.status(200).send(rendered)
   } catch (e: any) {
