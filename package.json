@@ -6,7 +6,7 @@
   "scripts": {
     "typecheck": "tsc",
     "start": "npm run typecheck && vercel dev",
-    "vercel-build": "npm run typecheck && find api && ls -la",
+    "vercel-build": "npm run typecheck",
     "demo": "curl http://localhost:3000/api/handler?q=what%20are%20beans"
   },
   "dependencies": {
