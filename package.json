@@ -5,12 +5,14 @@
   "license": "MIT",
   "scripts": {
     "typecheck": "tsc",
-    "start": "npm run typecheck && tsx index.tsx"
+    "start": "npm run typecheck && vercel dev",
+    "demo": "curl http://localhost:3000/api/handler?q=what%20are%20beans"
   },
   "dependencies": {
     "ai-jsx": "^0.2.0-4",
     "pino": "^8.14.1",
-    "pino-pretty": "^10.0.0"
+    "pino-pretty": "^10.0.0",
+    "vercel": "^30.2.2"
   },
   "devDependencies": {
     "@tsconfig/node18": "^2.0.1",
@@ -18,4 +20,3 @@
     "typescript": "^5.1.3"
   }
 }
-
