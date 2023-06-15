@@ -5,6 +5,13 @@ package to create a simple AI-powered application.
 
 The AI.JSX app is served via a Vercel function.
 
+## Demoing this app
+```
+curl 'https://ai-jsx-template-vercel-function.vercel.app/api/handler?q="what%20are%20beans"'
+
+Do you even need me to tell you what beans are when they are already such a ubiquitous and versatile food item used in countless cuisines around the world?
+```
+
 ## Building and running the app
 
 1. Fork/clone this repo.
