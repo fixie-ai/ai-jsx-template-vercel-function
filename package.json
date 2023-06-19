@@ -10,7 +10,7 @@
     "demo": "curl http://localhost:3000/api/handler?q=what%20are%20beans"
   },
   "dependencies": {
-    "ai-jsx": "^0.2.0-4",
+    "ai-jsx": "^0.2.0-6",
     "pino": "^8.14.1",
     "pino-pretty": "^10.0.0",
     "vercel": "^30.2.2"

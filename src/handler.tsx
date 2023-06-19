@@ -1,6 +1,5 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
-import * as LLMx from "ai-jsx";
-import { Element } from 'ai-jsx';
+import type { VercelRequest, VercelResponse } from "@vercel/node";
+import { createRenderContext, Element } from "ai-jsx";
 import {
   ChatCompletion,
   SystemMessage,
@@ -9,7 +8,13 @@ import {
 import { LogImplementation, LogLevel } from "ai-jsx/core/log";
 
 class ConsoleLogger extends LogImplementation {
-  log(level: LogLevel, element: Element<any>, renderId: string, obj: unknown | string, msg?: string) {
+  log(
+    level: LogLevel,
+    element: Element<any>,
+    renderId: string,
+    obj: unknown | string,
+    msg?: string
+  ) {
     const args = [`[${level}]`] as unknown[];
     args.push(`<${element.tag.name}>`, renderId);
     if (msg) {
@@ -22,7 +27,7 @@ class ConsoleLogger extends LogImplementation {
   }
 }
 
-function App({query}: {query: string}) {
+function App({ query }: { query: string }) {
   return (
     <ChatCompletion>
       <SystemMessage>
@@ -35,11 +40,11 @@ function App({query}: {query: string}) {
 
 export default async function handler(
   request: VercelRequest,
-  response: VercelResponse,
+  response: VercelResponse
 ) {
   let query = request.query.q;
   if (!query) {
-    response.status(400).send('Missing query parameter "q"')
+    response.status(400).send('Missing query parameter "q"');
     return;
   }
   // The querystring parser returns an array if there are multiple values for a key.
@@ -47,11 +52,11 @@ export default async function handler(
     query = query[0];
   }
   try {
-    const rendered = await LLMx.createRenderContext({
+    const rendered = await createRenderContext({
       logger: new ConsoleLogger(),
-    }).render(<App query={query} />)
-    response.status(200).send(rendered)
+    }).render(<App query={query} />);
+    response.status(200).send(rendered);
   } catch (e: any) {
-    response.status(500).send(e.message)
+    response.status(500).send(e.message);
   }
 }

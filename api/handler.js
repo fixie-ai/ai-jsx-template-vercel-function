@@ -1,4 +1,5 @@
-import * as LLMx from "ai-jsx";
+import { jsx as _jsx, jsxs as _jsxs } from "ai-jsx/jsx-runtime";
+import { createRenderContext } from "ai-jsx";
 import { ChatCompletion, SystemMessage, UserMessage, } from "ai-jsx/core/completion";
 import { LogImplementation } from "ai-jsx/core/log";
 class ConsoleLogger extends LogImplementation {
@@ -15,9 +16,7 @@ class ConsoleLogger extends LogImplementation {
     }
 }
 function App({ query }) {
-    return (LLMx.createElement(ChatCompletion, null,
-        LLMx.createElement(SystemMessage, null, "You are an agent that only asks rhetorical questions."),
-        LLMx.createElement(UserMessage, null, query)));
+    return (_jsxs(ChatCompletion, { children: [_jsx(SystemMessage, { children: "You are an agent that only asks rhetorical questions." }), _jsx(UserMessage, { children: query })] }));
 }
 export default async function handler(request, response) {
     let query = request.query.q;
@@ -30,9 +29,9 @@ export default async function handler(request, response) {
         query = query[0];
     }
     try {
-        const rendered = await LLMx.createRenderContext({
+        const rendered = await createRenderContext({
             logger: new ConsoleLogger(),
-        }).render(LLMx.createElement(App, { query: query }));
+        }).render(_jsx(App, { query: query }));
         response.status(200).send(rendered);
     }
     catch (e) {
